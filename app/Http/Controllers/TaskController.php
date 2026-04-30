@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Helpers\Response;
 use App\Http\Requests\AddTask;
 use App\Http\Requests\DeleteTask;
+use App\Http\Requests\UpdateTask;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Exception;
@@ -44,5 +45,22 @@ class TaskController extends Controller
         }
 
         return Response::success('Task Deleted Successfully',[]);
+    }
+
+    public function update(UpdateTask $request)
+    {
+        $validated = $request->validated();
+
+        try {
+            Task::where('id',$validated['task_id'])
+            ->update([
+                'title' => $validated['title'],
+                'description' => $validated['description'],
+            ]);
+        } catch (Exception $e) {
+            return Response::error('Something went wrong! Please try again',[]);
+        }
+
+        return Response::success('Task Updated Successfully',[]);
     }
 }

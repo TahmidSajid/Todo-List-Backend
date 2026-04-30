@@ -8,4 +8,5 @@ Route::prefix('task')->name('task.')->controller(TaskController::class)->group(f
     Route::get('index','index')->name('index');
     Route::post('store','store')->name('store');
     Route::delete('delete','delete')->name('delete');
+    Route::put('update','update')->name('update');
 });
